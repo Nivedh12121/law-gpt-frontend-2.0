@@ -62,7 +62,7 @@ const App: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'text/plain',
+          'Accept': 'application/json',
         },
         mode: 'cors',
         body: JSON.stringify({
@@ -74,55 +74,19 @@ const App: React.FC = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const reader = response.body?.getReader();
-      if (!reader) {
-        throw new Error('No response body');
-      }
-
-      let fullResponse = '';
+      // Parse JSON response
+      const data = await response.json();
+      const fullResponse = data.response || 'No response received';
       
-      // Add loading message
-      const loadingMessage: Message = {
+      // Add assistant message
+      const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: '',
+        content: fullResponse,
         timestamp: new Date()
       };
-      setMessages(prev => [...prev, loadingMessage]);
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        
-        const chunk = new TextDecoder().decode(value);
-        const lines = chunk.split('\n');
-        
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            try {
-              const data = JSON.parse(line.slice(6));
-              if (data.response) {
-                fullResponse += data.response;
-                // Update the last message
-                setMessages(prev => 
-                  prev.map((msg, index) => 
-                    index === prev.length - 1 
-                      ? { ...msg, content: fullResponse }
-                      : msg
-                  )
-                );
-              }
-              if (data.done) {
-                setIsLoading(false);
-                return;
-              }
-            } catch (e) {
-              console.log('Error parsing chunk:', e);
-            }
-          }
-        }
-      }
       
+      setMessages(prev => [...prev, assistantMessage]);
       setIsLoading(false);
       
     } catch (error) {
