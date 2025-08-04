@@ -552,7 +552,7 @@ const LegalChatbot: React.FC = () => {
               
               <button
                 onClick={() => {
-                  if (state.messages.length > 1 && confirm('Start a new conversation? Current chat will be saved to history.')) {
+                  if (state.messages.length > 1 && window.confirm('Start a new conversation? Current chat will be saved to history.')) {
                     dispatch({ type: 'CLEAR_MESSAGES' });
                   } else if (state.messages.length <= 1) {
                     dispatch({ type: 'CLEAR_MESSAGES' });
