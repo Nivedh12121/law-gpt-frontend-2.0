@@ -250,7 +250,7 @@ const StatusIndicator = ({ status }: { status: 'connected' | 'disconnected' | 'c
 );
 
 // API Configuration
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8001';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://resilient-rejoicing-production-e1e0.up.railway.app';
 
 const getKanoonResponse = async (query: string) => {
   const response = await fetch(`${API_BASE_URL}/chat`, {
