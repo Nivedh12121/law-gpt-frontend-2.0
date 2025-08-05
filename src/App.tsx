@@ -26,9 +26,11 @@ const App: React.FC = () => {
     checkConnection();
   }, []);
 
+  const API_URL = process.env.REACT_APP_API_URL || 'https://law-gpt-backend20-production.up.railway.app';
+
   const checkConnection = async () => {
     try {
-      const response = await fetch('https://law-gpt-backend20-production.up.railway.app/', {
+      const response = await fetch(`${API_URL}/`, {
         method: 'GET',
         mode: 'cors',
       });
@@ -39,6 +41,7 @@ const App: React.FC = () => {
         setConnectionStatus('disconnected');
       }
     } catch (error) {
+      console.error('Connection error:', error);
       setConnectionStatus('disconnected');
     }
   };
@@ -58,7 +61,7 @@ const App: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://law-gpt-backend20-production.up.railway.app/chat', {
+      const response = await fetch(`${API_URL}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
