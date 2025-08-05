@@ -1,0 +1,33 @@
+{
+  "name": "law-gpt-frontend-2.0",
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "headers": {
+        "cache-control": "s-maxage=31536000,immutable"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
+  "env": {
+    "REACT_APP_API_URL": "https://law-gpt-backend20-production.up.railway.app"
+  },
+  "build": {
+    "env": {
+      "REACT_APP_API_URL": "https://law-gpt-backend20-production.up.railway.app"
+    }
+  }
+}
