@@ -109,30 +109,31 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               {/* Law GPT Logo */}
-              <div className="w-12 h-12 rounded-lg overflow-hidden shadow-lg border-2 border-blue-200 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                <Scale className="w-8 h-8 text-white" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden shadow-lg border-2 border-blue-200 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                <Scale className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
               
               <div>
-                <h1 className="text-xl font-bold text-gray-800 flex items-center space-x-2">
+                <h1 className="text-lg sm:text-xl font-bold text-gray-800 flex items-center space-x-1 sm:space-x-2">
                   <span>Law GPT</span>
-                  <Sparkles className="w-5 h-5 text-yellow-500" />
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500" />
                 </h1>
-                <p className="text-sm text-gray-600">AI Legal Assistant for Indian Law</p>
+                <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">AI Legal Assistant for Indian Law</p>
+                <p className="text-xs text-gray-600 sm:hidden">Advanced AI Legal Research Assistant</p>
               </div>
             </div>
             
             {/* Connection Status */}
-            <div className="flex items-center space-x-2">
-              <div className={`w-3 h-3 rounded-full ${
+            <div className="flex items-center space-x-1 sm:space-x-2">
+              <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${
                 connectionStatus === 'connected' ? 'bg-green-500' : 
                 connectionStatus === 'disconnected' ? 'bg-red-500' : 'bg-yellow-500'
               }`}></div>
-              <span className={`text-sm font-medium ${
+              <span className={`text-xs sm:text-sm font-medium hidden sm:inline ${
                 connectionStatus === 'connected' ? 'text-green-600' : 
                 connectionStatus === 'disconnected' ? 'text-red-600' : 'text-yellow-600'
               }`}>
@@ -142,7 +143,7 @@ const App: React.FC = () => {
               </span>
               <button
                 onClick={checkConnection}
-                className="ml-2 px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
+                className="ml-1 sm:ml-2 px-2 sm:px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
               >
                 Retry
               </button>
@@ -152,37 +153,37 @@ const App: React.FC = () => {
       </div>
 
       {/* Chat Area */}
-      <div className="max-w-4xl mx-auto px-4 py-6">
-        <div className="bg-white rounded-lg shadow-lg h-[600px] flex flex-col">
+      <div className="max-w-4xl mx-auto px-2 sm:px-4 py-3 sm:py-6">
+        <div className="bg-white rounded-lg shadow-lg h-[calc(100vh-200px)] sm:h-[600px] flex flex-col">
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3 sm:space-y-4">
             {messages.map((message) => (
               <div
                 key={message.id}
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                <div className={`flex max-w-[80%] ${message.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                <div className={`flex max-w-[90%] sm:max-w-[80%] ${message.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                   {/* Avatar */}
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                  <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                     message.role === 'user' 
-                      ? 'bg-blue-500 ml-3' 
-                      : 'bg-gray-600 mr-3'
+                      ? 'bg-blue-500 ml-2 sm:ml-3' 
+                      : 'bg-gray-600 mr-2 sm:mr-3'
                   }`}>
                     {message.role === 'user' ? (
-                      <User size={16} className="text-white" />
+                      <User size={14} className="text-white sm:w-4 sm:h-4" />
                     ) : (
-                      <Bot size={16} className="text-white" />
+                      <Bot size={14} className="text-white sm:w-4 sm:h-4" />
                     )}
                   </div>
                   
                   {/* Message */}
-                  <div className={`px-4 py-3 rounded-lg ${
+                  <div className={`px-3 sm:px-4 py-2 sm:py-3 rounded-lg ${
                     message.role === 'user'
                       ? 'bg-blue-500 text-white rounded-br-sm'
                       : 'bg-gray-100 text-gray-800 rounded-bl-sm'
                   }`}>
-                    <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-                    <p className="text-xs mt-2 opacity-70">
+                    <p className="text-xs sm:text-sm whitespace-pre-wrap break-words">{message.content}</p>
+                    <p className="text-xs mt-1 sm:mt-2 opacity-70">
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </p>
                   </div>
@@ -192,14 +193,14 @@ const App: React.FC = () => {
             
             {isLoading && (
               <div className="flex justify-start">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center">
-                    <Bot size={16} className="text-white" />
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-600 flex items-center justify-center">
+                    <Bot size={14} className="text-white sm:w-4 sm:h-4" />
                   </div>
-                  <div className="bg-gray-100 rounded-lg px-4 py-3">
+                  <div className="bg-gray-100 rounded-lg px-3 sm:px-4 py-2 sm:py-3">
                     <div className="flex items-center space-x-2">
-                      <Loader2 size={16} className="animate-spin text-blue-500" />
-                      <span className="text-sm text-gray-600">AI is thinking...</span>
+                      <Loader2 size={14} className="animate-spin text-blue-500 sm:w-4 sm:h-4" />
+                      <span className="text-xs sm:text-sm text-gray-600">AI is thinking...</span>
                     </div>
                   </div>
                 </div>
@@ -209,9 +210,9 @@ const App: React.FC = () => {
 
           {/* Quick Actions */}
           {messages.length === 1 && (
-            <div className="border-t border-b p-4 bg-gray-50">
-              <p className="text-sm text-gray-600 mb-3 font-medium">🚀 Quick Legal Queries:</p>
-              <div className="flex flex-wrap gap-2">
+            <div className="border-t border-b p-3 sm:p-4 bg-gray-50">
+              <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 font-medium">🚀 Quick Legal Queries:</p>
+              <div className="flex flex-wrap gap-1 sm:gap-2">
                 {[
                   "What is Section 302 IPC?",
                   "Explain Article 21",
@@ -226,7 +227,7 @@ const App: React.FC = () => {
                       setInputValue(query);
                       setTimeout(() => sendMessage(), 100);
                     }}
-                    className="px-3 py-2 text-xs bg-blue-100 text-blue-700 rounded-full hover:bg-blue-200 transition-colors border border-blue-200"
+                    className="px-2 sm:px-3 py-1 sm:py-2 text-xs bg-blue-100 text-blue-700 rounded-full hover:bg-blue-200 transition-colors border border-blue-200 whitespace-nowrap"
                     disabled={isLoading || connectionStatus !== 'connected'}
                   >
                     {query}
@@ -237,53 +238,42 @@ const App: React.FC = () => {
           )}
 
           {/* Input Area */}
-          <div className="border-t p-4">
-            <div className="flex space-x-3">
+          <div className="border-t p-3 sm:p-4">
+            <div className="flex space-x-2 sm:space-x-3">
               <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                placeholder="Ask about Indian law, IPC sections, constitutional articles..."
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="Ask about Indian law, IPC sections..."
+                className="flex-1 px-3 sm:px-4 py-2 sm:py-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 disabled={isLoading || connectionStatus !== 'connected'}
               />
               <button
                 onClick={sendMessage}
                 disabled={isLoading || !inputValue.trim() || connectionStatus !== 'connected'}
-                className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center space-x-2 transition-colors"
+                className="px-3 sm:px-6 py-2 sm:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center space-x-1 sm:space-x-2 transition-colors"
               >
-                <Send size={16} />
-                <span>Send</span>
+                <Send size={14} className="sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Send</span>
               </button>
             </div>
             
             {connectionStatus === 'disconnected' && (
-              <p className="text-red-600 text-sm mt-2">
-                ❌ Backend disconnected. Please check if the server is running on http://localhost:8001
+              <p className="text-red-600 text-xs sm:text-sm mt-2">
+                ❌ Backend disconnected. Please check connection.
               </p>
             )}
           </div>
         </div>
         
         {/* Legal Disclaimer Footer */}
-        <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+        <div className="mt-3 sm:mt-4 p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
           <div className="flex items-start space-x-2">
-            <FileText className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+            <FileText className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
             <div className="text-xs text-yellow-800">
               <p className="font-semibold mb-1">⚖️ Legal Disclaimer:</p>
-              <p>This AI assistant provides general legal information for educational purposes only. It is not a substitute for professional legal advice. Always consult with a qualified lawyer for specific legal matters. The information provided may not reflect the most current legal developments.</p>
-            </div>
-          </div>
-        </div>
-        
-        {/* Legal Disclaimer Footer */}
-        <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <div className="flex items-start space-x-2">
-            <FileText className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
-            <div className="text-xs text-yellow-800">
-              <p className="font-semibold mb-1">⚖️ Legal Disclaimer:</p>
-              <p>This AI assistant provides general legal information for educational purposes only. It is not a substitute for professional legal advice. Always consult with a qualified lawyer for specific legal matters. The information provided may not reflect the most current legal developments.</p>
+              <p className="text-xs sm:text-sm">This AI assistant provides general legal information for educational purposes only. It is not a substitute for professional legal advice. Always consult with a qualified lawyer for specific legal matters.</p>
             </div>
           </div>
         </div>
