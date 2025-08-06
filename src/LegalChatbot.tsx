@@ -312,7 +312,7 @@ const initialState: ChatState = {
   ],
   isLoading: false,
   error: null,
-  apiStatus: 'connected'
+  apiStatus: 'connecting'
 };
 
 const chatReducer = (state: ChatState, action: any): ChatState => {
@@ -398,6 +398,22 @@ const LegalChatbot: React.FC = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, [state.messages]);
+
+  useEffect(() => {
+    const checkApiStatus = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/`);
+        if (response.ok) {
+          dispatch({ type: 'SET_API_STATUS', payload: 'connected' });
+        } else {
+          dispatch({ type: 'SET_API_STATUS', payload: 'disconnected' });
+        }
+      } catch (error) {
+        dispatch({ type: 'SET_API_STATUS', payload: 'disconnected' });
+      }
+    };
+    checkApiStatus();
+  }, []);
 
   const sendMessage = async (content: string) => {
     if (!content.trim()) return;
